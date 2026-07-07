@@ -1,5 +1,11 @@
 const $ = (id) => document.getElementById(id);
 
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 const loginBox = $('login-box');
 const adminLayout = $('admin-layout');
 const loginMsg = $('login-msg');
@@ -98,9 +104,9 @@ async function loadMenu() {
   tbody.innerHTML = menu.map((m) => `
     <tr>
       <td>${m.id}</td>
-      <td><img src="${m.image}" alt=""></td>
-      <td>${m.name}</td>
-      <td><span class="badge">${m.category}</span></td>
+      <td><img src="${escapeHtml(m.image)}" alt=""></td>
+      <td>${escapeHtml(m.name)}</td>
+      <td><span class="badge">${escapeHtml(m.category)}</span></td>
       <td>${Number(m.price).toLocaleString('uz-UZ')} so'm</td>
       <td class="actions">
         <a class="edit" data-id="${m.id}"><i class="fas fa-edit"></i></a>
@@ -211,13 +217,13 @@ async function loadOrders() {
         <h3>Buyurtma #${o.id}</h3>
         <span class="status ${st.cls}">${st.label}</span>
       </div>
-      <ul>${o.items.map((i) => `<li>${i.name} x${i.qty} — ${Number(i.price * i.qty).toLocaleString('uz-UZ')} so'm</li>`).join('')}</ul>
+      <ul>${o.items.map((i) => `<li>${escapeHtml(i.name)} x${i.qty} — ${Number(i.price * i.qty).toLocaleString('uz-UZ')} so'm</li>`).join('')}</ul>
       <p class="total">Jami: <strong>${Number(o.total).toLocaleString('uz-UZ')} so'm</strong></p>
       <div class="customer">
-        <p><i class="fas fa-user"></i> ${c.name || '-'}</p>
-        <p><i class="fas fa-phone"></i> ${c.phone || '-'}</p>
+        <p><i class="fas fa-user"></i> ${escapeHtml(c.name) || '-'}</p>
+        <p><i class="fas fa-phone"></i> ${escapeHtml(c.phone) || '-'}</p>
         <p><i class="fas ${o.customer.deliveryType === 'pickup' ? 'fa-store' : 'fa-truck'}"></i> ${o.customer.deliveryType === 'pickup' ? 'Olib kelish' : 'Yetkazib berish'}</p>
-        ${c.address ? `<p><i class="fas fa-map-marker-alt"></i> ${c.address}</p>` : ''}
+        ${c.address ? `<p><i class="fas fa-map-marker-alt"></i> ${escapeHtml(c.address)}</p>` : ''}
       </div>
       ${adminMapHtml(o.customer.location)}
       <p class="meta">${new Date(o.createdAt).toLocaleString('uz-UZ')}</p>
@@ -257,11 +263,11 @@ async function loadMessages() {
   if (!msgs.length) { list.innerHTML = '<p class="empty">Xabarlar yo\'q</p>'; return; }
   list.innerHTML = msgs.slice().reverse().map((m) => `
     <div class="card">
-      <div class="card-head"><h3>${m.name}</h3>
+      <div class="card-head"><h3>${escapeHtml(m.name)}</h3>
         <button class="icon-del" data-id="${m.id}" title="O'chirish"><i class="fas fa-trash"></i></button>
       </div>
-      <p>${m.message}</p>
-      <p class="meta">${m.email} · ${new Date(m.createdAt).toLocaleString('uz-UZ')}</p>
+      <p>${escapeHtml(m.message)}</p>
+      <p class="meta">${escapeHtml(m.email)} · ${new Date(m.createdAt).toLocaleString('uz-UZ')}</p>
     </div>
   `).join('');
 }

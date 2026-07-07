@@ -20,6 +20,12 @@ const toast = document.querySelector('#toast');
 let allMenu = [];
 let cart = [];
 
+function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+}
+
 if (menuBtn) {
     menuBtn.addEventListener('click', () => navbar.classList.toggle('active'));
 }
@@ -75,9 +81,9 @@ function renderMenu(query = '') {
     }
     menuContainer.innerHTML = items.map((item) => `
         <div class="box">
-            <img src="${item.image}" alt="${item.name}" loading="lazy">
-            <h3>${item.name}</h3>
-            <p class="desc">${item.description || ''}</p>
+            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy">
+            <h3>${escapeHtml(item.name)}</h3>
+            <p class="desc">${escapeHtml(item.description) || ''}</p>
             <div class="price">${formatPrice(item.price)} so'm ${item.oldPrice ? `<span>${formatPrice(item.oldPrice)} so'm</span>` : ''}</div>
             <a href="#" class="btn add-btn" data-id="${item.id}">Savatga qo'shish</a>
         </div>
@@ -123,9 +129,9 @@ function updateCart() {
     }
     cartItemsEl.innerHTML = cart.map((c) => `
         <div class="cart-item">
-            <img src="${c.image}" alt="${c.name}">
+            <img src="${escapeHtml(c.image)}" alt="${escapeHtml(c.name)}">
             <div class="ci-info">
-                <h4>${c.name}</h4>
+                <h4>${escapeHtml(c.name)}</h4>
                 <p>${formatPrice(c.price)} so'm</p>
             </div>
             <div class="ci-qty">
@@ -293,10 +299,10 @@ trackForm.addEventListener('submit', async (e) => {
                     <h4>Buyurtma #${o.id}</h4>
                     <span class="status ${st.cls}">${st.label}</span>
                 </div>
-                <ul>${o.items.map((i) => `<li>${i.name} x${i.qty}</li>`).join('')}</ul>
+                <ul>${o.items.map((i) => `<li>${escapeHtml(i.name)} x${i.qty}</li>`).join('')}</ul>
                 <p class="track-total">Jami: <strong>${Number(o.total).toLocaleString('uz-UZ')} so'm</strong></p>
                 <p class="track-meta"><i class="fas fa-truck"></i> ${type}</p>
-                ${o.address ? `<p class="track-meta"><i class="fas fa-map-marker-alt"></i> ${o.address}</p>` : ''}
+                ${o.address ? `<p class="track-meta"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(o.address)}</p>` : ''}
                 ${mapHtml(o.location)}
                 <p class="track-date">${new Date(o.createdAt).toLocaleString('uz-UZ')}</p>
             </div>`;

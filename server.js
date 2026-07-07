@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const crypto = require('crypto');
 const { menu } = require('./data/menu');
 
 const app = express();
@@ -41,6 +42,15 @@ app.post('/api/order', (req, res) => {
   if (!items || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: 'Savat bo\'sh' });
   }
+  const resolvedItems = [];
+  for (const it of items) {
+    const menuItem = menu.find((m) => m.id === Number(it && it.id));
+    const qty = Number(it && it.qty);
+    if (!menuItem || !Number.isInteger(qty) || qty <= 0) {
+      return res.status(400).json({ error: 'Noto\'g\'ri mahsulot' });
+    }
+    resolvedItems.push({ id: menuItem.id, name: menuItem.name, price: menuItem.price, qty });
+  }
   const { name, phone, address, deliveryType, location } = customer || {};
   const type = deliveryType === 'pickup' ? 'pickup' : 'delivery';
   if (!name || !phone) {
@@ -49,10 +59,10 @@ app.post('/api/order', (req, res) => {
   if (type === 'delivery' && !address) {
     return res.status(400).json({ error: 'Yetkazib berish uchun manzil majburiy' });
   }
-  const total = items.reduce((sum, it) => sum + it.price * it.qty, 0);
+  const total = resolvedItems.reduce((sum, it) => sum + it.price * it.qty, 0);
   const order = {
     id: orders.length + 1,
-    items,
+    items: resolvedItems,
     customer: {
       name, phone, address: address || '',
       deliveryType: type,
@@ -110,7 +120,7 @@ app.post('/api/admin/login', (req, res) => {
   if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Parol noto\'g\'ri' });
   }
-  const token = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const token = crypto.randomBytes(32).toString('hex');
   sessions.add(token);
   res.json({ token });
 });
