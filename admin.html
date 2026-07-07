@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | 7seventeen Coffee</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="login-box" id="login-box">
+        <h2><i class="fas fa-mug-hot"></i> Admin kirish</h2>
+        <input type="password" id="admin-password" placeholder="Parol">
+        <button class="btn" id="login-btn">Kirish</button>
+        <p class="login-msg" id="login-msg"></p>
+        <p class="hint">Standart parol: <code>admin123</code></p>
+    </div>
+
+    <div class="admin-layout hidden" id="admin-layout">
+        <aside class="sidebar">
+            <div class="logo">7seventeen<span>Coffee</span></div>
+            <nav>
+                <a href="#" class="nav-link active" data-tab="menu"><i class="fas fa-utensils"></i> Menyu</a>
+                <a href="#" class="nav-link" data-tab="orders"><i class="fas fa-receipt"></i> Buyurtmalar</a>
+                <a href="#" class="nav-link" data-tab="messages"><i class="fas fa-envelope"></i> Xabarlar</a>
+            </nav>
+            <button class="logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Chiqish</button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <h1 id="tab-title">Menyu boshqaruvi</h1>
+                <button class="btn" id="add-menu-btn"><i class="fas fa-plus"></i> Yangi mahsulot</button>
+            </header>
+
+            <div class="stats" id="stats">
+                <div class="stat-card"><i class="fas fa-utensils"></i><div><strong id="stat-menu">0</strong><span>Mahsulot</span></div></div>
+                <div class="stat-card"><i class="fas fa-receipt"></i><div><strong id="stat-orders">0</strong><span>Buyurtma</span></div></div>
+                <div class="stat-card"><i class="fas fa-envelope"></i><div><strong id="stat-messages">0</strong><span>Xabar</span></div></div>
+            </div>
+
+            <section class="tab-panel active" id="tab-menu">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Rasm</th><th>Nom</th><th>Kategoriya</th>
+                            <th>Narx</th><th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="menu-tbody"></tbody>
+                </table>
+            </section>
+
+            <section class="tab-panel" id="tab-orders">
+                <div class="cards" id="orders-list"></div>
+            </section>
+
+            <section class="tab-panel" id="tab-messages">
+                <div class="cards" id="messages-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="menu-modal">
+        <div class="modal-content">
+            <h2 id="menu-modal-title">Yangi mahsulot</h2>
+            <input type="hidden" id="m-id">
+            <input type="text" id="m-name" placeholder="Nomi">
+            <select id="m-category">
+                <option value="nonushta">Nonushta</option>
+                <option value="qahva">Qahva</option>
+                <option value="desert">Desert</option>
+            </select>
+            <input type="number" id="m-price" placeholder="Narx (so'm)">
+            <input type="number" id="m-oldPrice" placeholder="Eski narx (ixtiyoriy)">
+            <input type="text" id="m-image" placeholder="Rasm yo'li (masalan /img/x.jpg)">
+            <textarea id="m-description" placeholder="Tavsif"></textarea>
+            <div class="modal-actions">
+                <button class="btn" id="menu-save-btn">Saqlash</button>
+                <button class="btn cancel" id="menu-cancel-btn">Bekor</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
