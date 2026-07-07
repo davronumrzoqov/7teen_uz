@@ -58,7 +58,7 @@ function formatPrice(n) {
 async function loadMenu(category = 'all', query = '') {
     menuContainer.innerHTML = '<p class="loading">Yuklanmoqda...</p>';
     try {
-        const res = await fetch(`/api/menu${category !== 'all' ? '?category=' + category : ''}`);
+        const res = await fetch(`${API_BASE}/api/menu${category !== 'all' ? '?category=' + category : ''}`);
         allMenu = await res.json();
         renderMenu(query);
     } catch (e) {
@@ -204,7 +204,7 @@ checkoutForm.addEventListener('submit', async (e) => {
     };
     const items = cart.map((c) => ({ id: c.id, name: c.name, price: c.price, qty: c.qty }));
     try {
-        const res = await fetch('/api/order', {
+        const res = await fetch(API_BASE + '/api/order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ items, customer })
@@ -232,7 +232,7 @@ contactForm.addEventListener('submit', async (e) => {
     const email = document.querySelector('#c-email').value;
     const message = document.querySelector('#c-message').value;
     try {
-        const res = await fetch('/api/contact', {
+        const res = await fetch(API_BASE + '/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, message })
@@ -280,7 +280,7 @@ trackForm.addEventListener('submit', async (e) => {
     const phone = document.querySelector('#track-phone').value.trim();
     trackResult.innerHTML = '<p class="loading">Qidirilmoqda...</p>';
     try {
-        const res = await fetch('/api/orders/track?phone=' + encodeURIComponent(phone));
+        const res = await fetch(API_BASE + '/api/orders/track?phone=' + encodeURIComponent(phone));
         const orders = await res.json();
         if (!res.ok) { trackResult.innerHTML = `<p class="loading">${orders.error}</p>`; return; }
         if (!orders.length) { trackResult.innerHTML = '<p class="loading">Buyurtmalar topilmadi</p>'; return; }

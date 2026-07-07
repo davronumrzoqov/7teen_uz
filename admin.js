@@ -14,7 +14,7 @@ function showToast(msg) {
 }
 
 function api(path, options = {}) {
-  return fetch(path, {
+  return fetch(API_BASE + path, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ function showAdmin(ok) {
 
 $('login-btn').addEventListener('click', async () => {
   const password = $('admin-password').value;
-  const res = await fetch('/api/admin/login', {
+  const res = await fetch(API_BASE + '/api/admin/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password })
