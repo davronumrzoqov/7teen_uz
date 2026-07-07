@@ -6,6 +6,12 @@ function escapeHtml(str) {
   }[c]));
 }
 
+function resolveImage(path) {
+  if (!path) return '';
+  if (/^https?:\/\//.test(path)) return path;
+  return API_BASE + '/' + path.replace(/^\//, '');
+}
+
 const loginBox = $('login-box');
 const adminLayout = $('admin-layout');
 const loginMsg = $('login-msg');
@@ -104,7 +110,7 @@ async function loadMenu() {
   tbody.innerHTML = menu.map((m) => `
     <tr>
       <td>${m.id}</td>
-      <td><img src="${escapeHtml(m.image)}" alt=""></td>
+      <td><img src="${escapeHtml(resolveImage(m.image))}" alt=""></td>
       <td>${escapeHtml(m.name)}</td>
       <td><span class="badge">${escapeHtml(m.category)}</span></td>
       <td>${Number(m.price).toLocaleString('uz-UZ')} so'm</td>

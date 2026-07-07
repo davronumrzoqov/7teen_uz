@@ -5,7 +5,7 @@ const menu = [
     category: "nonushta",
     price: 38000,
     oldPrice: 45000,
-    image: "/img/images.jpg",
+    image: "img/images.jpg",
     description: "Snezhniy kuritsa, tuzli bodring va sosiska bilan tayyorlangan shishasimon sendvich."
   },
   {
@@ -14,7 +14,7 @@ const menu = [
     category: "nonushta",
     price: 29000,
     oldPrice: null,
-    image: "/img/images (17).jpg",
+    image: "img/images (17).jpg",
     description: "Sutda qaynatilgan jaydari ovsyanka, asal va yangi mevalar bilan."
   },
   {
@@ -23,7 +23,7 @@ const menu = [
     category: "desert",
     price: 22000,
     oldPrice: null,
-    image: "/img/images (7).jpg",
+    image: "img/images (7).jpg",
     description: "Qatlamli xamir ichiga to'ldirilgan shokoladli Nutella kruassani."
   },
   {
@@ -32,7 +32,7 @@ const menu = [
     category: "desert",
     price: 26000,
     oldPrice: 30000,
-    image: "/img/images (8).jpg",
+    image: "img/images (8).jpg",
     description: "An'anaviy qatlamli asal torti, qaymoqli krem bilan."
   },
   {
@@ -41,7 +41,7 @@ const menu = [
     category: "qahva",
     price: 18000,
     oldPrice: null,
-    image: "/img/img-8108-64c38bd155912670680860.jpeg",
+    image: "img/img-8108-64c38bd155912670680860.jpeg",
     description: "Muzli amerikano - tetiklantiruvchi va yumshoq ta'mli."
   },
   {
@@ -50,7 +50,7 @@ const menu = [
     category: "qahva",
     price: 24000,
     oldPrice: null,
-    image: "/img/images (16).jpg",
+    image: "img/images (16).jpg",
     description: "Sut va espresso asosidagi muzli latte."
   },
   {
@@ -59,7 +59,7 @@ const menu = [
     category: "qahva",
     price: 24000,
     oldPrice: null,
-    image: "/img/images (14).jpg",
+    image: "img/images (14).jpg",
     description: "Sutli ko'pik bilan bezatilgan muzli kapuchino."
   },
   {
@@ -68,7 +68,7 @@ const menu = [
     category: "qahva",
     price: 28000,
     oldPrice: 32000,
-    image: "/img/images (15).jpg",
+    image: "img/images (15).jpg",
     description: "Xalva ta'mi bilan boyitilgan maxsus muzli latte."
   }
 ];

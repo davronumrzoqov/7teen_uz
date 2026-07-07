@@ -26,6 +26,12 @@ function escapeHtml(str) {
     }[c]));
 }
 
+function resolveImage(path) {
+    if (!path) return '';
+    if (/^https?:\/\//.test(path)) return path;
+    return API_BASE + '/' + path.replace(/^\//, '');
+}
+
 if (menuBtn) {
     menuBtn.addEventListener('click', () => navbar.classList.toggle('active'));
 }
@@ -81,7 +87,7 @@ function renderMenu(query = '') {
     }
     menuContainer.innerHTML = items.map((item) => `
         <div class="box">
-            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy">
+            <img src="${escapeHtml(resolveImage(item.image))}" alt="${escapeHtml(item.name)}" loading="lazy">
             <h3>${escapeHtml(item.name)}</h3>
             <p class="desc">${escapeHtml(item.description) || ''}</p>
             <div class="price">${formatPrice(item.price)} so'm ${item.oldPrice ? `<span>${formatPrice(item.oldPrice)} so'm</span>` : ''}</div>
@@ -129,7 +135,7 @@ function updateCart() {
     }
     cartItemsEl.innerHTML = cart.map((c) => `
         <div class="cart-item">
-            <img src="${escapeHtml(c.image)}" alt="${escapeHtml(c.name)}">
+            <img src="${escapeHtml(resolveImage(c.image))}" alt="${escapeHtml(c.name)}">
             <div class="ci-info">
                 <h4>${escapeHtml(c.name)}</h4>
                 <p>${formatPrice(c.price)} so'm</p>
