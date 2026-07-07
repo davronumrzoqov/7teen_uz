@@ -3,4 +3,4 @@
 // GitHub Pages'ga yuklab, backend-ni alohida hostga (masalan Render) qo'yganingizda,
 // bu yerga backend manzilini yozing, masalan:
 //   window.API_BASE = 'https://7teen-coffee.onrender.com';
-window.API_BASE = '';
+window.API_BASE = 'https://seventeen-uz.onrender.com';
